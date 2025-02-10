@@ -4,12 +4,8 @@ import { Post } from './Post/Post';
 
 export const MyPosts = (props) => {
 
-  const posts = [
-    {id: 1, message: 'Hi Andrey', likesCount: 5},
-    {id: 2, message: 'It s my first post', likesCount: 25},
-  ];
-  
-  const postsElements = posts.map( post => <Post message={posts.message} likesCount={posts.likesCount}/>);
+ 
+  const postsElements = props.posts.map( post => <Post message={post.message} likesCount={post.likesCount} />);
 
   return (
     <div className={classes.postsBlock}>
