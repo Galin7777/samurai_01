@@ -7,7 +7,7 @@ export const DialogItem = (props) => {
 
   return (
     <div className={classes.dialog + classes.active}>
-      <img src='https://avatars.mds.yandex.net/i?id=2a00000194dc294e86d966c04fc76c0c24c4-1766800-fast-images&n=13' alt=''/>
+      <img src={props.photo} alt='' />
       <NavLink to={path}>{props.name}</NavLink>
     </div>
   );
