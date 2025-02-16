@@ -6,10 +6,10 @@ import { Message } from './Message';
 export const Dialogs = (props) => {
 
 const dialogsElements = props.state.dialogs
-  .map( dialog => <DialogItem name={dialog.name} id={dialog.id}/> );
+  .map( dialog => <DialogItem name={dialog.name} id={dialog.id} photo={dialog.photo} />);
 
 const messegesElements = props.state.messages
-  .map( message => <Message message={message.message}/> );
+  .map( message => <Message message={message.message} id={message.id} />);
 
   return (
     <div className={classes.dialogs}>
