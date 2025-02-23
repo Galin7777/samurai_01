@@ -1,16 +1,22 @@
 import  classes from './MyPosts.module.scss';
 import React from 'react';
 import { Post } from './Post/Post';
+import { addPostActionCreator } from '../../../redux/state';
+import { updateNewPostTextActionCreator } from '../../../redux/state';
+
 
 export const MyPosts = (props) => {
-
   const postsElements = props.posts.map( post => <Post message={post.message} likesCount={post.likesCount} />);
-
   const newPostElement = React.createRef();
 
   const addPost = () => {
+    props.dispatch(addPostActionCreator ());
+  };
+  
+  const onPostChange = () => {
     const text = newPostElement.current.value;
-    props.addPost(text);
+    const action = updateNewPostTextActionCreator(text);
+    props.dispatch(action);
   };
 
   return (
@@ -18,7 +24,7 @@ export const MyPosts = (props) => {
       <h3>My posts</h3>
       <div>
         <div>
-          <textarea ref={newPostElement}></textarea>
+        <textarea onChange={ onPostChange } ref={newPostElement} value={props.newPostText} />
         </div>
         <div>
           <button onClick={ addPost }>Add post</button>

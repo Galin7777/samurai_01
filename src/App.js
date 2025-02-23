@@ -17,8 +17,8 @@ export const App = (props) => {
         <div className={classes.appWrapperContent}>
           <Routes>
             <Route path='/profile' element={<Profile
-              state={props.state.profilePage} 
-              addPost={props.addPost}/>} />
+              profilePage={props.state.profilePage}
+              dispatch={props.dispatch} /> } />
             <Route path='/dialogs' element={<Dialogs state={props.state.dialogsPage} />} />
             {/* <Route path='/news' element={<News />} />
             <Route path='/music' element={<Music />} />
