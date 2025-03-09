@@ -2,27 +2,24 @@ import  classes from './Dialogs.module.scss';
 import React from 'react';
 import { DialogItem } from './DialogItem';
 import { Message } from './Message';
-import { sendMessageCreator } from '../../redux/dialogs-reducer';
-import { updateNewMessageBodyCreator } from '../../redux/dialogs-reducer';
 
 export const Dialogs = (props) => {
-
-const dialogsElements = props.state.dialogs
-  .map( dialog => <DialogItem name={dialog.name} id={dialog.id} photo={dialog.photo} />);
-
-const messegesElements = props.state.messages
-  .map( message => <Message message={message.message} id={message.id} dispatch={props.dispatch} />);
+  console.log(props);
+const dialogsElements = props.dialogs
+  .map( dialog => <DialogItem {...dialog} />);
+const messegesElements = props.messages
+  .map( message => <Message {...message} />);
 
   const addMessage = () => {
-    props.dispatch(sendMessageCreator());
+    props.addMessage();
   }; 
 
   const onNewMessageChange = (event) => {
     const body = event.target.value;
-    props.dispatch(updateNewMessageBodyCreator(body));
+    props.onNewMessageChange(body);
   };
 
-  const newMessageBody = props.state.newMessageBody;
+  const newMessageBody = props.newMessageBody;
 
   return (
     <div className={classes.dialogs}>
@@ -32,8 +29,8 @@ const messegesElements = props.state.messages
       <div className={classes.messages}>
         { messegesElements }
         <div>
-          <textarea value={newMessageBody}
-                  onChange={onNewMessageChange}
+          <textarea value={ newMessageBody }
+                  onChange= { onNewMessageChange }
                   placeholder='Enter your message'>
           </textarea>
         </div>
