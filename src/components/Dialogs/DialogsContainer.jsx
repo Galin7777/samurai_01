@@ -1,8 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-// import { DialogItem } from './DialogItem';
-// import { Message } from './Message';
 import { Dialogs } from './Dialogs';
 import { sendMessageCreator } from '../../redux/dialogs-reducer';
 import { updateNewMessageBodyCreator } from '../../redux/dialogs-reducer';

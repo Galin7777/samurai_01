@@ -4,22 +4,10 @@ import { DialogItem } from './DialogItem';
 import { Message } from './Message';
 
 export const Dialogs = (props) => {
-  console.log(props);
 const dialogsElements = props.dialogs
   .map( dialog => <DialogItem {...dialog} />);
 const messegesElements = props.messages
   .map( message => <Message {...message} />);
-
-  const addMessage = () => {
-    props.addMessage();
-  }; 
-
-  const onNewMessageChange = (event) => {
-    const body = event.target.value;
-    props.onNewMessageChange(body);
-  };
-
-  const newMessageBody = props.newMessageBody;
 
   return (
     <div className={classes.dialogs}>
@@ -29,13 +17,13 @@ const messegesElements = props.messages
       <div className={classes.messages}>
         { messegesElements }
         <div>
-          <textarea value={ newMessageBody }
-                  onChange= { onNewMessageChange }
+          <textarea value={ props.newMessageBody }
+                  onChange={(e) => props.onNewMessageChange(e.target.value)}
                   placeholder='Enter your message'>
           </textarea>
         </div>
       <div>
-        <button onClick={ addMessage }>Add message</button>
+        <button onClick={ props.addMessage }>Add message</button>
       </div>
       </div>
     </div>
