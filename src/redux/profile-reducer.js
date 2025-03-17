@@ -10,6 +10,7 @@ const initialState = {
 };
 
 export const profileReducer = (state = initialState, action) => {
+
   switch (action.type) {
     case ADD_POST:
       const newPost = {

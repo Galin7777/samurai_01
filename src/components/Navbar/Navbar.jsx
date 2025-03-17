@@ -30,6 +30,11 @@ export const Navbar = (props) => {
           Settings
         </NavLink>
       </div>
+      <div className={classes.item}>
+        <NavLink to="/users" className={({ isActive }) => isActive ? `${classes.item} ${classes.activeLink}` : classes.item}>
+          Users
+        </NavLink>
+      </div>
       <div className={classes.sidebar}>
         <h3>Friends</h3>
         <div className={classes.sidebarList}>
