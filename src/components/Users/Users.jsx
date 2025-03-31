@@ -1,35 +1,48 @@
 import React from 'react';
 import classes from './Users.module.scss';
+import userPhoto from '../../../src/assets/images/avatar.jpg';
 
-export const Users = ({ users, follow, unfollow }) => {
+export const Users = (props) => {
+
+const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
+
+let pages = [];
+for (let i=1; i <= pagesCount; i++) {
+  pages.push(i);
+}
+
   return (
     <div className={classes.usersContainer}>
-      {users.map(user => (
+      <div>
+        {pages.map( p => {
+          return <span key={p} className={props.currentPage === p ? classes.selectedPage : ''}
+                              onClick={(e) => props.onPageChanged(p)}>{p}</span>
+  }
+)}
+      </div>
+      {props.users.map(user => (
         <div key={user.id} className={classes.userCard}>
           <div className={classes.avatar}>
-            <img src={user.photoUrl} alt="avatar" />
+            <img src={ user.photos.small != null ? user.photos.small : userPhoto } alt="avatar" />
             {user.followed ? (
               <button
                 className={classes.unfollowButton}
-                onClick={() => unfollow(user.id)}
+                onClick={() => props.unfollow(user.id)}
               >
                 Unfollow
               </button>
             ) : (
               <button
                 className={classes.followButton}
-                onClick={() => follow(user.id)}
+                onClick={() => props.follow(user.id)}
               >
                 Follow
               </button>
             )}
           </div>
           <div className={classes.userInfo}>
-            <div className={classes.userName}>{user.fullName}</div>
+            <div className={classes.name}>{user.name}</div>
             <div className={classes.userStatus}>{user.status}</div>
-          <div className={classes.userLocation}>
-                        {user.location.country}, {user.location.city}
-          </div>
           </div>
         </div>
       ))}
