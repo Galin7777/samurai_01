@@ -35,16 +35,15 @@
     "no-console": ["off"],
     "no-constant-condition": ["error", { "checkLoops": false }],
     "no-return-assign": ["error"],
-    "indent": [
-      "error",
-      2,
-      {
-        "SwitchCase": 1,
-        "VariableDeclarator": { "let": 2, "const": 3 },
-        "MemberExpression": 1,
-        "IgnoredNodes": ["TemplateLiteral *"]
-      }
-    ],
+   "indent": [
+  "error",
+  2,
+  {
+    "SwitchCase": 1,
+    "VariableDeclarator": { "let": 2, "const": 3 },
+    "MemberExpression": 1
+  }
+],
     "block-spacing": ["error", "always"],
     "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
     "camelcase": ["error"],

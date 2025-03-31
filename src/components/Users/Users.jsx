@@ -4,26 +4,26 @@ import userPhoto from '../../../src/assets/images/avatar.jpg';
 
 export const Users = (props) => {
 
-const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
+  const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
 
-let pages = [];
-for (let i=1; i <= pagesCount; i++) {
-  pages.push(i);
-}
+  const pages = [];
+  for (let i = 1; i <= pagesCount; i++) {
+    pages.push(i);
+  }
 
   return (
     <div className={classes.usersContainer}>
       <div>
-        {pages.map( p => {
+        {pages.map((p) => {
           return <span key={p} className={props.currentPage === p ? classes.selectedPage : ''}
-                              onClick={(e) => props.onPageChanged(p)}>{p}</span>
-  }
-)}
+            onClick={(e) => props.onPageChanged(p)}>{p}</span>;
+        },
+        )}
       </div>
-      {props.users.map(user => (
+      {props.users.map((user) => (
         <div key={user.id} className={classes.userCard}>
           <div className={classes.avatar}>
-            <img src={ user.photos.small != null ? user.photos.small : userPhoto } alt="avatar" />
+            <img src={user.photos.small !== null ? user.photos.small : userPhoto} alt="avatar" />
             {user.followed ? (
               <button
                 className={classes.unfollowButton}
