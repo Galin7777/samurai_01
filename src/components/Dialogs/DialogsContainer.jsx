@@ -7,21 +7,21 @@ import { updateNewMessageBodyCreator } from '../../redux/dialogs-reducer';
 
 export const DialogsContainer = () => {
   const dispatch = useDispatch();
-  const { dialogs, messages, newMessageBody } = useSelector(state => state.dialogsPage);
+  const { dialogs, messages, newMessageBody } = useSelector((state) => state.dialogsPage);
 
   const addMessage = () => {
-   dispatch(sendMessageCreator());
-  }; 
+    dispatch(sendMessageCreator());
+  };
 
   const onNewMessageChange = (body) => {
     dispatch(updateNewMessageBodyCreator(body));
   };
 
-  return (<Dialogs addMessage={addMessage} 
-                    onNewMessageChange={onNewMessageChange} 
-                    dialogs={dialogs} 
-                    messages={messages}
-                    newMessageBody={newMessageBody} 
-    />
+  return (<Dialogs addMessage={addMessage}
+    onNewMessageChange={onNewMessageChange}
+    dialogs={dialogs}
+    messages={messages}
+    newMessageBody={newMessageBody}
+  />
   );
 };

@@ -11,7 +11,7 @@ import { DialogsContainer } from './components/Dialogs/DialogsContainer';
 import { UsersContainer } from './components/Users/UsersContainer';
 
 export const App = () => {
-  const sidebar = useSelector(state => state.sidebar);
+  const sidebar = useSelector((state) => state.sidebar);
 
   return (
     <BrowserRouter>
