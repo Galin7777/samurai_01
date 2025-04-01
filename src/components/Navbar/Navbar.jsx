@@ -38,11 +38,11 @@ export const Navbar = (props) => {
       <div className={classes.sidebar}>
         <h3>Friends</h3>
         <div className={classes.sidebarList}>
-          {props.state.map(friend => 
+          {props.state.map((friend) =>
             <div className={classes.sidebarCard}>
-              <p className={classes.sidebarName}>{friend.name}</p> 
+              <p className={classes.sidebarName}>{friend.name}</p>
               <img src={friend.img} alt={friend.name} className={classes.sidebarAvatar} />
-            </div>
+            </div>,
           )}
         </div>
       </div>

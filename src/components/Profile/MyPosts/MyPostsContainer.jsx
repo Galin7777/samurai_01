@@ -7,17 +7,17 @@ import { updateNewPostTextActionCreator } from '../../../redux/profile-reducer';
 
 export const MyPostsContainer = () => {
   const dispatch = useDispatch();
-  const { posts, newPostText } = useSelector(state => state.profilePage);
+  const { posts, newPostText } = useSelector((state) => state.profilePage);
 
   const addPost = () => {
-    dispatch(addPostActionCreator ());
+    dispatch(addPostActionCreator());
   };
-  
+
   const onPostChange = (text) => {
     dispatch(updateNewPostTextActionCreator(text));
   };
 
-  return (<MyPosts updateNewPostText={onPostChange} addPost={addPost} 
-                  posts={posts}
-                  newPostText={newPostText} />);
+  return (<MyPosts updateNewPostText={onPostChange} addPost={addPost}
+    posts={posts}
+    newPostText={newPostText} />);
 };

@@ -16,30 +16,30 @@ const initialState = {
     { id: 2, message: 'Hi is your kamasutra' },
     { id: 3, message: 'Yo' },
   ],
-  newMessageBody: ''
+  newMessageBody: '',
 };
 
 export const dialogsReducer = (state = initialState, action) => {
   switch (action.type) {
-  case UPDATE_NEW_MESSAGE_BODY:
-    return {
-      ...state,
-      newMessageBody: action.body
-    };
+    case UPDATE_NEW_MESSAGE_BODY:
+      return {
+        ...state,
+        newMessageBody: action.body,
+      };
 
-  case SEND_MESSAGE:
-    return {
-      ...state,
-      messages: [
-        ...state.messages,
-        { id: state.messages.length + 1, message: state.newMessageBody }
-      ],
-      newMessageBody: ''
-    };
+    case SEND_MESSAGE:
+      return {
+        ...state,
+        messages: [
+          ...state.messages,
+          { id: state.messages.length + 1, message: state.newMessageBody },
+        ],
+        newMessageBody: '',
+      };
 
-  default:
-    return state;
-}
+    default:
+      return state;
+  }
 };
 
 export const sendMessageCreator = () => ({ type: SEND_MESSAGE });
