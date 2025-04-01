@@ -2,7 +2,10 @@ import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { Users } from './Users';
-import { setUsersAC, setCurrentPageAC, setTotalUsersCountAC, toggleIsFetchingAC } from '../../redux/users-reduser';
+import { setUsersAC } from '../../redux/users-reduser';
+import { setCurrentPageAC } from '../../redux/users-reduser';
+import { setTotalUsersCountAC } from '../../redux/users-reduser';
+import { toggleIsFetchingAC } from '../../redux/users-reduser';
 import { Preloader } from '../common/Preloader/Preloader';
 
 export const UsersContainer = () => {
