@@ -1,24 +1,27 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Users } from './Users';
-import { setUsersAC } from '../../redux/users-reduser';
-import { setCurrentPageAC } from '../../redux/users-reduser';
-import { setTotalUsersCountAC } from '../../redux/users-reduser';
+import { setUsersAC, setCurrentPageAC, setTotalUsersCountAC, toggleIsFetchingAC } from '../../redux/users-reduser';
+import { Preloader } from '../common/Preloader/Preloader';
 
-export const UsersContainer = (props) => {
+export const UsersContainer = () => {
   const dispatch = useDispatch();
-  const { users, currentPage, totalUsersCount, pageSize } = useSelector((store) => store.usersPage);
+  const { users, currentPage, totalUsersCount, pageSize, isFetching } = useSelector((store) => store.usersPage);
 
   useEffect(() => {
-    axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${props.currentPage}&count=${props.pageSize}`)
+    dispatch(toggleIsFetchingAC(true));
+    axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}`)
       .then((response) => {
         dispatch(setUsersAC(response.data.items));
         dispatch(setTotalUsersCountAC(response.data.totalCount));
+        dispatch(toggleIsFetchingAC(false));
       })
-      .catch((error) => console.error('Ошибка при загрузке пользователей:', error));
-  }, [dispatch, props.currentPage, props.pageSize]);
+      .catch((error) => {
+        console.error('Ошибка при загрузке пользователей:', error);
+        dispatch(toggleIsFetchingAC(false));
+      });
+  }, [dispatch, currentPage, pageSize]);
 
   const follow = (userId) => {
     dispatch({ type: 'FOLLOW', userId });
@@ -30,20 +33,28 @@ export const UsersContainer = (props) => {
 
   const onPageChanged = (pageNumber) => {
     dispatch(setCurrentPageAC(pageNumber));
-
+    dispatch(toggleIsFetchingAC(true));
     axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${pageSize}`)
       .then((response) => {
         dispatch(setUsersAC(response.data.items));
-      });
+        dispatch(toggleIsFetchingAC(false));
+      })
+      .catch(() => dispatch(toggleIsFetchingAC(false)));
   };
 
-  return (<Users users={users}
-    currentPage={currentPage}
-    totalUsersCount={totalUsersCount}
-    pageSize={pageSize}
-    onPageChanged={onPageChanged}
-    follow={follow}
-    unfollow={unfollow}
-  />
+  return (
+    <>
+      {isFetching ? <Preloader />
+        : <Users
+          users={users}
+          currentPage={currentPage}
+          totalUsersCount={totalUsersCount}
+          pageSize={pageSize}
+          onPageChanged={onPageChanged}
+          follow={follow}
+          unfollow={unfollow}
+        />
+      }
+    </>
   );
 };
