@@ -3,12 +3,13 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Header } from './components/Header';
 import { Navbar } from './components/Navbar';
-import { Profile } from './components/Profile';
+import { Navigate } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 import { Routes } from 'react-router-dom';
 import { DialogsContainer } from './components/Dialogs/DialogsContainer';
 import { UsersContainer } from './components/Users/UsersContainer';
+import { ProfileContainer } from './components/Profile/ProfileContainer';
 
 export const App = () => {
   const sidebar = useSelector((state) => state.sidebar);
@@ -20,7 +21,8 @@ export const App = () => {
         <Navbar state={sidebar} />
         <div className={classes.appWrapperContent}>
           <Routes>
-            <Route path='/profile' element={<Profile />} />
+            <Route path='/profile' element={<Navigate to='/profile/2' />} />
+            <Route path='/profile/:userId' element={<ProfileContainer />} />
             <Route path='/dialogs' element={<DialogsContainer />} />
             <Route path='/users' element={<UsersContainer />} />
             {/* <Route path='/news' element={<News />} />
