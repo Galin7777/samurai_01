@@ -14,7 +14,6 @@ export const UsersContainer = () => {
   const dispatch = useDispatch();
   const { users, currentPage, totalUsersCount, pageSize, isFetching } = useSelector((store) => store.usersPage);
 
-  // Функция загрузки пользователей
   const fetchUsers = async (pageNumber) => {
     dispatch(toggleIsFetchingAC(true));
     try {
