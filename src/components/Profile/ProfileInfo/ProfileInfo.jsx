@@ -20,22 +20,30 @@ export const ProfileInfo = ({ profile }) => {
         <img src={profile.photos.large} alt='avatar' />
 
         <h2>{profile.fullName}</h2>
-        <p><strong>About me:</strong> {profile.aboutMe}</p>
+        <p><strong>About me:</strong> {profile.aboutMe ? profile.aboutMe : 'No information about user.'}</p>
         <p><strong>Looking for a job:</strong> {profile.lookingForAJob ? 'Yes' : 'No'}</p>
         {profile.lookingForAJob && (
           <p><strong>My skills:</strong> {profile.lookingForAJobDescription}</p>
         )}
 
         <div>
-          <h3>Contacts:</h3>
-          {Object.entries(profile.contacts).map(([key, value]) =>
-            value ? (
-              <p key={key}>
-                <strong>{key}:</strong> {value}
-              </p>
-            ) : null,
+          <h3>Contacts: </h3>
+          {Object.values(profile.contacts).some(Boolean) ? (
+            Object.entries(profile.contacts).map(([key, value]) =>
+              value ? (
+                <p key={key}>
+                  <strong>{key}:</strong>{' '}
+                  <a href={value} target='_blank'>
+                    {value}
+                  </a>
+                </p>
+              ) : null,
+            )
+          ) : (
+            <p>No contacts available.</p>
           )}
         </div>
+
       </div>
     </div>
   );
