@@ -1,7 +1,6 @@
 import classes from './App.module.scss';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Header } from './components/Header';
 import { Navbar } from './components/Navbar';
 import { Navigate } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
@@ -10,6 +9,7 @@ import { Routes } from 'react-router-dom';
 import { DialogsContainer } from './components/Dialogs/DialogsContainer';
 import { UsersContainer } from './components/Users/UsersContainer';
 import { ProfileContainer } from './components/Profile/ProfileContainer';
+import { HeaderContainer } from './components/Header/HeaderContainer';
 
 export const App = () => {
   const sidebar = useSelector((state) => state.sidebar);
@@ -17,7 +17,7 @@ export const App = () => {
   return (
     <BrowserRouter>
       <div className={classes.appWrapper}>
-        <Header />
+        <HeaderContainer />
         <Navbar state={sidebar} />
         <div className={classes.appWrapperContent}>
           <Routes>
