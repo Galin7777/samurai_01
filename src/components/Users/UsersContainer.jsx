@@ -9,15 +9,17 @@ import { setTotalUsersCountAC } from '../../redux/users-reduser';
 import { toggleIsFetchingAC } from '../../redux/users-reduser';
 import { Preloader } from '../common/Preloader/Preloader';
 
-
 export const UsersContainer = () => {
   const dispatch = useDispatch();
   const { users, currentPage, totalUsersCount, pageSize, isFetching } = useSelector((store) => store.usersPage);
 
-  const fetchUsers = async (pageNumber) => {
+  const fetchUsers = async (pageNumber = currentPage) => {
     dispatch(toggleIsFetchingAC(true));
     try {
-      const response = await axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${pageSize}`);
+      const response = await axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${pageSize}`, {
+        withCredentials: true,
+        headers: { 'API-KEY': '96903f6e-7c99-43f5-8eb7-569b44830df5' },
+      });
       dispatch(setUsersAC(response.data.items));
       dispatch(setTotalUsersCountAC(response.data.totalCount));
     } catch (error) {
@@ -27,18 +29,14 @@ export const UsersContainer = () => {
   };
 
   useEffect(() => {
-    fetchUsers(currentPage);
+    fetchUsers();
   }, [dispatch, currentPage, pageSize]);
-
-  const follow = (userId) => dispatch({ type: 'FOLLOW', userId });
-  const unfollow = (userId) => dispatch({ type: 'UNFOLLOW', userId });
 
   const onPageChanged = (pageNumber) => {
     dispatch(setCurrentPageAC(pageNumber));
     fetchUsers(pageNumber);
   };
 
-  // Генерация страниц с порционной пагинацией (10 страниц за раз)
   const pagesCount = Math.ceil(totalUsersCount / pageSize);
   const pages = Array.from({ length: pagesCount }, (_, i) => i + 1);
 
@@ -50,9 +48,8 @@ export const UsersContainer = () => {
           currentPage={currentPage}
           pages={pages}
           onPageChanged={onPageChanged}
-          follow={follow}
-          unfollow={unfollow}
-          portionSize={10} // Размер порции страниц
+          portionSize={10}
+          fetchUsers={fetchUsers}
         />
       )}
     </>
