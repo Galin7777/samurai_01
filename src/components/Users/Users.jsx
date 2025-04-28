@@ -91,7 +91,6 @@ export const Users = ({ users, currentPage, pages, onPageChanged, portionSize, f
             <button
               className={user.followed ? classes.unfollowButton : classes.followButton}
               onClick={() => user.followed ? handleUnfollow(user.id) : handleFollow(user.id)}
-              disabled={loadingIds.includes(user.id)}
             >
               {user.followed ? 'Unfollow' : 'Follow'}
             </button>
