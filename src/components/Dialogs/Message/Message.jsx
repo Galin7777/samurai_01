@@ -8,7 +8,7 @@ export const Message = (props) => {
 
   return (
     <div className={`${classes.message} ${messageClass}`}>
-        <img src={avatar} alt='Avatar' className={classes.avatar} />
+      <img src={avatar} alt='Avatar' className={classes.avatar} />
       <div className={classes.messageText}>{props.message}</div>
     </div>
   );
