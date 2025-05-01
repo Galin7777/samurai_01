@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { Header } from './Header';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuthUserData } from '../../redux/auth-reduser';
+import { headersAPI } from '../../api/api';
 
 export const HeaderContainer = () => {
   const dispatch = useDispatch();
@@ -12,12 +12,10 @@ export const HeaderContainer = () => {
   useEffect(() => {
     const fetchAuthData = async () => {
       try {
-        const response = await axios.get('https://social-network.samuraijs.com/api/1.0/auth/me', {
-          withCredentials: true,
-        });
+        const response = await headersAPI.getHeaders();
 
-        if (response.data.resultCode === 0) {
-          const { id, email, login } = response.data.data;
+        if (response.resultCode === 0) {
+          const { id, email, login } = response.data;
           dispatch(setAuthUserData(id, email, login));
         }
       } catch (error) {
