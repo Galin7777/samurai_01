@@ -56,6 +56,15 @@
   background-color: #c82333;
 }
 
+.followButton:disabled,
+.unfollowButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+  background-color: #6c757d;
+  transition: opacity 0.3s ease;
+}
+
 .userInfo {
   flex-grow: 1;
   display: flex;
