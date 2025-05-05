@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
 import { Users } from './Users';
 import { setUsersAC } from '../../redux/users-reduser';
 import { setCurrentPageAC } from '../../redux/users-reduser';
 import { setTotalUsersCountAC } from '../../redux/users-reduser';
 import { toggleIsFetchingAC } from '../../redux/users-reduser';
 import { Preloader } from '../common/Preloader/Preloader';
+import { usersAPI } from '../../api/api';
 
 export const UsersContainer = () => {
   const dispatch = useDispatch();
@@ -16,12 +16,9 @@ export const UsersContainer = () => {
   const fetchUsers = async (pageNumber = currentPage) => {
     dispatch(toggleIsFetchingAC(true));
     try {
-      const response = await axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${pageSize}`, {
-        withCredentials: true,
-        headers: { 'API-KEY': '96903f6e-7c99-43f5-8eb7-569b44830df5' },
-      });
-      dispatch(setUsersAC(response.data.items));
-      dispatch(setTotalUsersCountAC(response.data.totalCount));
+      const response = await usersAPI.getUsers(pageNumber, pageSize);
+      dispatch(setUsersAC(response.items));
+      dispatch(setTotalUsersCountAC(response.totalCount));
     } catch (error) {
       console.error('Ошибка при загрузке пользователей:', error);
     }
