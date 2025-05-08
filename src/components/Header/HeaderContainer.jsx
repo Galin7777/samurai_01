@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Header } from './Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuthUserData } from '../../redux/auth-reduser';
-import { headersAPI } from '../../api/api';
+import { authAPI } from '../../api/api';
 
 export const HeaderContainer = () => {
   const dispatch = useDispatch();
@@ -12,7 +12,7 @@ export const HeaderContainer = () => {
   useEffect(() => {
     const fetchAuthData = async () => {
       try {
-        const response = await headersAPI.getHeaders();
+        const response = await authAPI.getHeaders();
 
         if (response.resultCode === 0) {
           const { id, email, login } = response.data;
