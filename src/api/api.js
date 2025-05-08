@@ -14,7 +14,7 @@ export const usersAPI = {
   },
 };
 
-export const headersAPI = {
+export const authAPI = {
   getHeaders() {
     return instance.get('auth/me')
       .then((response) => response.data);
