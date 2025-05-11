@@ -4,51 +4,22 @@ import classes from './Users.module.scss';
 import { useDispatch } from 'react-redux';
 import userPhoto from '../../../src/assets/images/avatar.jpg';
 import { NavLink } from 'react-router-dom';
-import { followAC } from '../../redux/users-reduser';
-import { unfollowAC } from '../../redux/users-reduser';
-import { followAPI } from '../../api/api';
-import { toggleIsFollowingProgressAC } from '../../redux/users-reduser';
+import { follow } from '../../redux/users-reduser';
+import { unfollow } from '../../redux/users-reduser';
 
-export const Users = ({ users, currentPage, pages, onPageChanged, portionSize, fetchUsers }) => {
+export const Users = ({ users, currentPage, pages, onPageChanged, portionSize }) => {
   const dispatch = useDispatch();
-
   const isFollowingInProgress = useSelector((state) => state.usersPage.isFollowingInProgress);
   const portionNumber = Math.ceil(currentPage / portionSize);
   const startIndex = (portionNumber - 1) * portionSize;
   const paginatedPages = pages.slice(startIndex, startIndex + portionSize);
 
-  const handleFollow = async (userId) => {
-    dispatch(toggleIsFollowingProgressAC(true, userId));
-
-    try {
-      const response = await followAPI.postFollow(userId);
-
-      if (response.resultCode === 0) {
-        dispatch(followAC(userId));
-        await fetchUsers(); // обновляем список после Follow
-      }
-    } catch (error) {
-      console.error('Ошибка при подписке:', error);
-    } finally {
-      dispatch(toggleIsFollowingProgressAC(false, userId));
-    }
+  const handleFollow = (userId) => {
+    dispatch(follow(userId));
   };
 
-  const handleUnfollow = async (userId) => {
-    dispatch(toggleIsFollowingProgressAC(true, userId));
-
-    try {
-      const response = await followAPI.deleteFollow(userId);
-
-      if (response.resultCode === 0) {
-        dispatch(unfollowAC(userId));
-        await fetchUsers(); // обновляем список после Unfollow
-      }
-    } catch (error) {
-      console.error('Ошибка при отписке:', error);
-    } finally {
-      dispatch(toggleIsFollowingProgressAC(false, userId));
-    }
+  const handleUnfollow = (userId) => {
+    dispatch(unfollow(userId));
   };
 
   return (
