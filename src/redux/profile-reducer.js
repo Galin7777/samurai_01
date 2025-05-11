@@ -1,3 +1,5 @@
+import { profileAPI } from '../api/api';
+
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
@@ -46,3 +48,12 @@ export const addPostActionCreator = () => ({ type: ADD_POST });
 export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile });
 export const updateNewPostTextActionCreator = (text) =>
   ({ type: UPDATE_NEW_POST_TEXT, newText: text });
+
+export const getUserProfile = (userId) => async (dispatch) => {
+  try {
+    const response = await profileAPI.getProfile(userId);
+    dispatch(setUserProfile(response));
+  } catch (error) {
+    console.error('Ошибка при загрузке профиля:', error);
+  }
+};
