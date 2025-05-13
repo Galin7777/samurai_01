@@ -6,13 +6,15 @@ import { Navigate } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 import { Routes } from 'react-router-dom';
-import { DialogsContainer } from './components/Dialogs/DialogsContainer';
+import  DialogsContainer  from './components/Dialogs/DialogsContainer';
 import { UsersContainer } from './components/Users/UsersContainer';
-import { ProfileContainer } from './components/Profile/ProfileContainer';
+import  ProfileContainer  from './components/Profile/ProfileContainer';
 import { HeaderContainer } from './components/Header/HeaderContainer';
+import { Login } from './components/Login/Login';
 
 export const App = () => {
   const sidebar = useSelector((state) => state.sidebar);
+  const isAuth = useSelector((state) => state.auth.isAuth);
 
   return (
     <BrowserRouter>
@@ -22,9 +24,10 @@ export const App = () => {
         <div className={classes.appWrapperContent}>
           <Routes>
             <Route path='/profile' element={<Navigate to='/profile/2' />} />
-            <Route path='/profile/:userId' element={<ProfileContainer />} />
+            <Route path='/profile/:userId' element={ <ProfileContainer />} />
             <Route path='/dialogs' element={<DialogsContainer />} />
             <Route path='/users' element={<UsersContainer />} />
+            <Route path='/login' element={<Login />} />
             {/* <Route path='/news' element={<News />} />
             <Route path='/music' element={<Music />} />
             <Route path='/settings' element={<Settings />} /> */}
