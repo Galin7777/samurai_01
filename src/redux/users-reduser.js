@@ -1,3 +1,6 @@
+import { usersAPI } from '../api/api';
+import { followAPI } from '../api/api';
+
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
@@ -59,17 +62,68 @@ export const usersReducer = (state = initialState, action) => {
     case TOGGLE_IS_FETCHING:
       return { ...state, isFetching: action.isFetching };
 
-
     default:
       return state;
 
   };
 };
 
-export const followAC = (userId) => ({ type: FOLLOW, userId });
-export const unfollowAC = (userId) => ({ type: UNFOLLOW, userId });
+export const followSuccess = (userId) => ({ type: FOLLOW, userId });
+export const unfollowSuccess = (userId) => ({ type: UNFOLLOW, userId });
 export const setUsersAC = (users) => ({ type: SET_USERS, users });
 export const setCurrentPageAC = (currentPage) => ({ type: SET_CURRENT_PAGE, currentPage });
 export const setTotalUsersCountAC = (totalUsersCount) => ({ type: SET_TOTAL_USERS_COUNT, totalUsersCount });
 export const toggleIsFetchingAC = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetching });
 export const toggleIsFollowingProgressAC = (isFetching, userId) => ({ type: TOGGLE_IS_FOLLOWING_PROGRESS, isFetching, userId });
+
+export const getUsers = (pageNumber, pageSize) => {
+  return async (dispatch) => {
+    dispatch(toggleIsFetchingAC(true));
+    try {
+      const response = await usersAPI.getUsers(pageNumber, pageSize);
+      dispatch(setUsersAC(response.items));
+      dispatch(setTotalUsersCountAC(response.totalCount));
+    } catch (error) {
+      console.error('Ошибка при загрузке пользователей:', error);
+    }
+    dispatch(toggleIsFetchingAC(false));
+  };
+};
+
+export const follow = (userId) => {
+  return async (dispatch, getState) => {
+    dispatch(toggleIsFollowingProgressAC(true, userId));
+
+    try {
+      const response = await followAPI.postFollow(userId);
+
+      if (response.resultCode === 0) {
+        const { currentPage, pageSize } = getState().usersPage;
+        dispatch(getUsers(currentPage, pageSize)); // обновляем список после Follow
+      }
+    } catch (error) {
+      console.error('Ошибка при подписке:', error);
+    } finally {
+      dispatch(toggleIsFollowingProgressAC(false, userId));
+    }
+  };
+};
+
+export const unfollow = (userId) => {
+  return async (dispatch, getState) => {
+    dispatch(toggleIsFollowingProgressAC(true, userId));
+
+    try {
+      const response = await followAPI.deleteFollow(userId);
+
+      if (response.resultCode === 0) {
+        const { currentPage, pageSize } = getState().usersPage;
+        dispatch(getUsers(currentPage, pageSize)); // обновляем список после unfollow
+      }
+    } catch (error) {
+      console.error('Ошибка при подписке:', error);
+    } finally {
+      dispatch(toggleIsFollowingProgressAC(false, userId));
+    }
+  };
+};

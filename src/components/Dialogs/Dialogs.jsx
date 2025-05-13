@@ -5,7 +5,7 @@ import { Message } from './Message';
 
 export const Dialogs = (props) => {
   const dialogsElements = props.dialogs
-    .map((dialog) => <DialogItem {...dialog} />);
+    .map((dialog) => <DialogItem key={dialog.id} {...dialog} />);
   const messegesElements = props.messages
     .map((message) => <Message {...message} />);
 
