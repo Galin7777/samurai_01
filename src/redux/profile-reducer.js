@@ -3,6 +3,7 @@ import { profileAPI } from '../api/api';
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const TOGGLE_PROFILE_LOADING = 'TOGGLE_PROFILE_LOADING';
 
 const initialState = {
   posts: [
@@ -11,6 +12,7 @@ const initialState = {
   ],
   newPostText: 'it-kamasutra.com',
   profile: null,
+  isLoading: false,
 };
 
 export const profileReducer = (state = initialState, action) => {
@@ -39,6 +41,12 @@ export const profileReducer = (state = initialState, action) => {
         profile: action.profile,
       };
 
+    case TOGGLE_PROFILE_LOADING:
+      return {
+        ...state,
+        isLoading: action.isLoading,
+      };
+
     default:
       return state;
   }
@@ -48,12 +56,16 @@ export const addPostActionCreator = () => ({ type: ADD_POST });
 export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile });
 export const updateNewPostTextActionCreator = (text) =>
   ({ type: UPDATE_NEW_POST_TEXT, newText: text });
+export const toggleProfileLoading = (isLoading) => ({ type: TOGGLE_PROFILE_LOADING, isLoading });
 
 export const getUserProfile = (userId) => async (dispatch) => {
+  dispatch(toggleProfileLoading(true));
   try {
     const response = await profileAPI.getProfile(userId);
     dispatch(setUserProfile(response));
   } catch (error) {
     console.error('Ошибка при загрузке профиля:', error);
+  } finally {
+    dispatch(toggleProfileLoading(false));
   }
 };
