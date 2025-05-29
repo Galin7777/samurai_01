@@ -1,8 +1,8 @@
 import classes from './ProfileInfo.module.scss';
-import React from 'react';
 import { Preloader } from '../../common/Preloader/Preloader';
+import { ProfileStatus } from '../ProfileInfo/ProfileStatus';
 
-export const ProfileInfo = ({ profile }) => {
+export const ProfileInfo = ({ profile, status, updateStatus }) => {
   if (!profile) {
     return <Preloader />;
   }
@@ -10,14 +10,14 @@ export const ProfileInfo = ({ profile }) => {
   return (
     <div>
       <div>
-        <img
+        {/* <img
           src='https://avatars.mds.yandex.net/i?id=c85e9599c8cbbff810260e0081cf57454b817d14-10981924-images-thumbs&n=13'
           alt='background'
-        />
+          /> */}
       </div>
-
       <div className={classes.descriptionBlock}>
         <img src={profile.photos.large} alt='avatar' />
+        <ProfileStatus status={status} updateStatus={updateStatus} />
 
         <h2>{profile.fullName}</h2>
         <p><strong>About me:</strong> {profile.aboutMe ? profile.aboutMe : 'No information about user.'}</p>
@@ -43,7 +43,6 @@ export const ProfileInfo = ({ profile }) => {
             <p>No contacts available.</p>
           )}
         </div>
-
       </div>
     </div>
   );

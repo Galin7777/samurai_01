@@ -4,8 +4,9 @@ import { useSelector } from 'react-redux';
 import { Dialogs } from './Dialogs';
 import { sendMessageCreator } from '../../redux/dialogs-reducer';
 import { updateNewMessageBodyCreator } from '../../redux/dialogs-reducer';
+import { withAuthRedirect } from '../../../src/hoc/withAuthRedirect';
 
-export const DialogsContainer = () => {
+const DialogsContainer = () => {
   const dispatch = useDispatch();
   const { dialogs, messages, newMessageBody } = useSelector((state) => state.dialogsPage);
 
@@ -25,3 +26,5 @@ export const DialogsContainer = () => {
   />
   );
 };
+
+export default withAuthRedirect(DialogsContainer);

@@ -23,7 +23,7 @@ export const App = () => {
         <Navbar state={sidebar} />
         <div className={classes.appWrapperContent}>
           <Routes>
-            <Route path='/profile' element={<Navigate to='/profile/2' />} />
+            <Route path='/profile' element={<Navigate to='/profile/32285' />} />
             <Route path='/profile/:userId' element={ <ProfileContainer />} />
             <Route path='/dialogs' element={<DialogsContainer />} />
             <Route path='/users' element={<UsersContainer />} />
