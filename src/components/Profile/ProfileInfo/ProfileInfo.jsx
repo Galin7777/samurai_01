@@ -2,7 +2,7 @@ import classes from './ProfileInfo.module.scss';
 import { Preloader } from '../../common/Preloader/Preloader';
 import { ProfileStatus } from '../ProfileInfo/ProfileStatus';
 
-export const ProfileInfo = ({ profile }) => {
+export const ProfileInfo = ({ profile, status, updateStatus }) => {
   if (!profile) {
     return <Preloader />;
   }
@@ -17,7 +17,7 @@ export const ProfileInfo = ({ profile }) => {
       </div>
       <div className={classes.descriptionBlock}>
         <img src={profile.photos.large} alt='avatar' />
-        <ProfileStatus status={'Hello my friends'}/>
+        <ProfileStatus status={status} updateStatus={updateStatus} />
 
         <h2>{profile.fullName}</h2>
         <p><strong>About me:</strong> {profile.aboutMe ? profile.aboutMe : 'No information about user.'}</p>
@@ -43,7 +43,6 @@ export const ProfileInfo = ({ profile }) => {
             <p>No contacts available.</p>
           )}
         </div>
-
       </div>
     </div>
   );
