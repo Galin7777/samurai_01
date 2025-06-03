@@ -1,5 +1,5 @@
 import  classes from './Dialogs.module.scss';
-import React from 'react';
+import { useForm } from 'react-hook-form';
 import { DialogItem } from './DialogItem';
 import { Message } from './Message';
 
@@ -16,7 +16,7 @@ export const Dialogs = (props) => {
       </div>
       <div className={classes.messages}>
         { messegesElements }
-        <div>
+        {/* <div>
           <textarea value={ props.newMessageBody }
             onChange={(e) => props.onNewMessageChange(e.target.value)}
             placeholder='Enter your message'>
@@ -24,7 +24,25 @@ export const Dialogs = (props) => {
         </div>
         <div>
           <button onClick={ props.addMessage }>Add message</button>
-        </div>
+        </div> */}
+      </div>
+      <AddMessageForm />
+    </div>
+  );
+};
+
+export const AddMessageForm = (props) => {
+  return (
+    <div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <textarea
+          value='newMessageBody'
+          onChange={(e) => props.onNewMessageChange(e.target.value)}
+          placeholder="Enter your message"
+        />
+      </form>
+      <div>
+        <button>Add message</button>
       </div>
     </div>
   );
