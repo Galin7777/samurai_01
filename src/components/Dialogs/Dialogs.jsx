@@ -16,34 +16,32 @@ export const Dialogs = (props) => {
       </div>
       <div className={classes.messages}>
         { messegesElements }
-        {/* <div>
-          <textarea value={ props.newMessageBody }
-            onChange={(e) => props.onNewMessageChange(e.target.value)}
-            placeholder='Enter your message'>
-          </textarea>
-        </div>
-        <div>
-          <button onClick={ props.addMessage }>Add message</button>
-        </div> */}
       </div>
-      <AddMessageForm />
+      <AddMessageForm addMessage={props.addMessage} />
     </div>
   );
 };
 
 export const AddMessageForm = (props) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    props.addMessage(data.message);
+  };
+
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <textarea
-          value='newMessageBody'
-          onChange={(e) => props.onNewMessageChange(e.target.value)}
-          placeholder="Enter your message"
-        />
-      </form>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <textarea {...register('message', { required: 'Заполните поле' })}
+        placeholder="Enter your message"
+      />
+      {errors.message && <span>{errors.message.message}</span>}
       <div>
-        <button>Add message</button>
+        <button type='submit' onClick={handleSubmit(onSubmit)}>Add message</button>
       </div>
-    </div>
+    </form>
   );
 };
