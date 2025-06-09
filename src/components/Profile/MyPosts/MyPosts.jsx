@@ -1,34 +1,45 @@
 import  classes from './MyPosts.module.scss';
-import React from 'react';
 import { Post } from './Post/Post';
+import { useForm } from 'react-hook-form';
 
 export const MyPosts = (props) => {
   const postsElements = props.posts.map((post) => <Post key={post.id} message={post.message} likesCount={post.likesCount} />);
-  const newPostElement = React.createRef();
 
-  const onAddPost = () => {
-    props.addPost();
-  };
-
-  const onPostChange = () => {
-    const text = newPostElement.current.value;
-    props.updateNewPostText(text);
+  const onAddPost = (newPostText) => {
+    props.addPost(newPostText);
   };
 
   return (
     <div className={classes.postsBlock}>
       <h3>My posts</h3>
-      <div>
-        <div>
-          <textarea onChange={ onPostChange } ref={newPostElement} value={props.newPostText} />
-        </div>
-        <div>
-          <button onClick={ onAddPost }>Add post</button>
-        </div>
-      </div>
+      <AddNewPostForm addPost={onAddPost} />
       <div className={classes.posts}>
         { postsElements }
       </div>
     </div>
+  );
+};
+
+export const AddNewPostForm = (props) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    props.addPost(data.newPostText);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div>
+        <textarea {...register('newPostText', { required: 'Заполните поле' })} />
+      </div>
+      {errors.newPostText && <span>{errors.newPostText.message}</span>}
+      <div>
+        <button>Add post</button>
+      </div>
+    </form>
   );
 };
