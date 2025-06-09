@@ -40,7 +40,7 @@ export const AddMessageForm = (props) => {
       />
       {errors.message && <span>{errors.message.message}</span>}
       <div>
-        <button type='submit' onClick={handleSubmit(onSubmit)}>Add message</button>
+        <button>Add message</button>
       </div>
     </form>
   );
