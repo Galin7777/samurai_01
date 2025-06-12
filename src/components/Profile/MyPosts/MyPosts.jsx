@@ -1,31 +1,23 @@
 import  classes from './MyPosts.module.scss';
-import React from 'react';
 import { Post } from './Post/Post';
+import { TextareaForm } from '../../common/TextareaForm/TextareaForm';
 
 export const MyPosts = (props) => {
   const postsElements = props.posts.map((post) => <Post key={post.id} message={post.message} likesCount={post.likesCount} />);
-  const newPostElement = React.createRef();
 
-  const onAddPost = () => {
-    props.addPost();
-  };
-
-  const onPostChange = () => {
-    const text = newPostElement.current.value;
-    props.updateNewPostText(text);
+  const onAddPost = (newPostText) => {
+    props.addPost(newPostText);
   };
 
   return (
     <div className={classes.postsBlock}>
       <h3>My posts</h3>
-      <div>
-        <div>
-          <textarea onChange={ onPostChange } ref={newPostElement} value={props.newPostText} />
-        </div>
-        <div>
-          <button onClick={ onAddPost }>Add post</button>
-        </div>
-      </div>
+      <TextareaForm
+        name='newPostText'
+        placeholder='Post message'
+        onSubmitForm={onAddPost}
+        buttontext='Add Post'
+      />
       <div className={classes.posts}>
         { postsElements }
       </div>
