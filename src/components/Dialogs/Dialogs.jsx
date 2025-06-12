@@ -1,8 +1,7 @@
 import  classes from './Dialogs.module.scss';
-import { useForm } from 'react-hook-form';
 import { DialogItem } from './DialogItem';
 import { Message } from './Message';
-import { requiredForm } from '../../utils/validationRules';
+import { TextareaForm } from '../common/TextareaForm/TextareaForm';
 
 export const Dialogs = (props) => {
   const dialogsElements = props.dialogs
@@ -18,33 +17,12 @@ export const Dialogs = (props) => {
       <div className={classes.messages}>
         { messegesElements }
       </div>
-      <AddMessageForm addMessage={props.addMessage} />
-    </div>
-  );
-};
-
-export const AddMessageForm = (props) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm();
-
-  const onSubmit = (data) => {
-    props.addMessage(data.message);
-    reset();
-  };
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <textarea {...register('message', requiredForm)}
-        placeholder="Enter your message"
+      <TextareaForm
+        name='message'
+        placeholder='Enter your message'
+        onSubmitForm={props.addMessage}
+        buttontext='Add message'
       />
-      {errors.message && <span>{errors.message.message}</span>}
-      <div>
-        <button>Add message</button>
-      </div>
-    </form>
+    </div>
   );
 };
