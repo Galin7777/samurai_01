@@ -1,7 +1,6 @@
 import  classes from './MyPosts.module.scss';
 import { Post } from './Post/Post';
-import { useForm } from 'react-hook-form';
-import { requiredForm } from '../../../utils/validationRules';
+import { TextareaForm } from '../../common/TextareaForm/TextareaForm';
 
 export const MyPosts = (props) => {
   const postsElements = props.posts.map((post) => <Post key={post.id} message={post.message} likesCount={post.likesCount} />);
@@ -13,36 +12,15 @@ export const MyPosts = (props) => {
   return (
     <div className={classes.postsBlock}>
       <h3>My posts</h3>
-      <AddNewPostForm addPost={onAddPost} />
+      <TextareaForm
+        name='newPostText'
+        placeholder='Post message'
+        onSubmitForm={onAddPost}
+        buttontext='Add Post'
+      />
       <div className={classes.posts}>
         { postsElements }
       </div>
     </div>
-  );
-};
-
-export const AddNewPostForm = (props) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm();
-
-  const onSubmit = (data) => {
-    props.addPost(data.newPostText);
-    reset();
-  };
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <textarea {...register('newPostText', requiredForm)} />
-      </div>
-      {errors.newPostText && <span>{errors.newPostText.message}</span>}
-      <div>
-        <button>Add post</button>
-      </div>
-    </form>
   );
 };
