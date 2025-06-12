@@ -1,6 +1,7 @@
 import  classes from './MyPosts.module.scss';
 import { Post } from './Post/Post';
 import { useForm } from 'react-hook-form';
+import { requiredForm } from '../../../utils/validationRules';
 
 export const MyPosts = (props) => {
   const postsElements = props.posts.map((post) => <Post key={post.id} message={post.message} likesCount={post.likesCount} />);
@@ -25,16 +26,18 @@ export const AddNewPostForm = (props) => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
   const onSubmit = (data) => {
     props.addPost(data.newPostText);
+    reset();
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <textarea {...register('newPostText', { required: 'Заполните поле' })} />
+        <textarea {...register('newPostText', requiredForm)} />
       </div>
       {errors.newPostText && <span>{errors.newPostText.message}</span>}
       <div>

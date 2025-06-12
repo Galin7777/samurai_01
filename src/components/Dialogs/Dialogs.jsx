@@ -2,6 +2,7 @@ import  classes from './Dialogs.module.scss';
 import { useForm } from 'react-hook-form';
 import { DialogItem } from './DialogItem';
 import { Message } from './Message';
+import { requiredForm } from '../../utils/validationRules';
 
 export const Dialogs = (props) => {
   const dialogsElements = props.dialogs
@@ -27,15 +28,17 @@ export const AddMessageForm = (props) => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
   const onSubmit = (data) => {
     props.addMessage(data.message);
+    reset();
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <textarea {...register('message', { required: 'Заполните поле' })}
+      <textarea {...register('message', requiredForm)}
         placeholder="Enter your message"
       />
       {errors.message && <span>{errors.message.message}</span>}
