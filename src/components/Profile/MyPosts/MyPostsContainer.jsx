@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { MyPosts } from './MyPosts';
@@ -11,10 +10,6 @@ export const MyPostsContainer = () => {
   const addPost = (newPostText) => {
     dispatch(addPostActionCreator(newPostText));
   };
-
-  // const onPostChange = (text) => {
-  //   dispatch(updateNewPostTextActionCreator(text));
-  // };
 
   return (<MyPosts addPost={addPost}
     posts={posts}
