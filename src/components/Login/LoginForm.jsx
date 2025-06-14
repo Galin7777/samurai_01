@@ -1,16 +1,27 @@
-import { useForm } from 'react-hook-form';
 import classes from './LoginForm.module.scss';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { login } from '../../redux/auth-reduser';
 
 export const LoginForm = () => {
+  const dispatch = useDispatch();
+  const isAuth = useSelector((state) => state.auth.isAuth);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({ mode: 'onBlur' });
 
   const onSubmit = (data) => {
-    console.log('Login data:', data);
+    dispatch(login(data.email, data.password, data.rememberMe));
   };
+
+  if (isAuth) {
+    return <Navigate to='/profile' />;
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
