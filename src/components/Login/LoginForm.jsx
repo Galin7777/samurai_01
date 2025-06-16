@@ -33,12 +33,6 @@ export const LoginForm = () => {
           id="email"
           type="email"
           {...register('email', emailForm)}
-          // required: 'Поле обязательно для ввода',
-          // pattern: {
-          //   value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-          //   message: 'Неверный адрес электронной почты',
-          // },
-          // )}
           className={errors.email ? classes.inputError : ''}
           placeholder="Email"
         />
@@ -50,9 +44,6 @@ export const LoginForm = () => {
           id="password"
           type="password"
           {...register('password', passwordForm)}
-          // required: 'Поле обязательно для ввода',
-          // maxLength: { value: 64, message: 'Пароль не должен содержать более 64 символов' },
-          // )}
           className={errors.password ? classes.inputError : ''}
           placeholder="Password"
         />
