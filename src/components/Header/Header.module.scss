@@ -10,3 +10,20 @@
 .loginBlock {
   float: right;
 }
+
+.authButton {
+  padding: 6px 12px;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+  border-radius: 14px;
+  cursor: pointer;
+  text-decoration: none;
+
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.authButton:hover {
+  background-color: #f0f0f0;
+  color: #555;
+}
