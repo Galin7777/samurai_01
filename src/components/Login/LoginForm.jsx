@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { login } from '../../redux/auth-reduser';
+import { emailForm, passwordForm } from '../../utils/validationRules';
 
 export const LoginForm = () => {
   const dispatch = useDispatch();
@@ -31,13 +32,13 @@ export const LoginForm = () => {
         <input
           id="email"
           type="email"
-          {...register('email', {
-            required: 'Поле обязательно для ввода',
-            pattern: {
-              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-              message: 'Неверный адрес электронной почты',
-            },
-          })}
+          {...register('email', emailForm)}
+          // required: 'Поле обязательно для ввода',
+          // pattern: {
+          //   value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+          //   message: 'Неверный адрес электронной почты',
+          // },
+          // )}
           className={errors.email ? classes.inputError : ''}
           placeholder="Email"
         />
@@ -48,10 +49,10 @@ export const LoginForm = () => {
         <input
           id="password"
           type="password"
-          {...register('password', {
-            required: 'Поле обязательно для ввода',
-            maxLength: { value: 64, message: 'Пароль не должен содержать более 64 символов' },
-          })}
+          {...register('password', passwordForm)}
+          // required: 'Поле обязательно для ввода',
+          // maxLength: { value: 64, message: 'Пароль не должен содержать более 64 символов' },
+          // )}
           className={errors.password ? classes.inputError : ''}
           placeholder="Password"
         />
@@ -62,7 +63,7 @@ export const LoginForm = () => {
           id='rememberMe'
           type='checkbox'
           name='rememberMe'
-          {...register('rememberMe', { required: 'Запомни меня' })}
+          {...register('rememberMe')}
         />
         <label htmlFor='rememberMe'>Запомни меня</label>
       </div>
