@@ -38,13 +38,16 @@ export const getAuthUserData = () => async (dispatch) => {
   }
 };
 
-export const login = (email, password, rememberMe) => async (dispatch) => {
+export const login = (email, password, rememberMe, setError) => async (dispatch) => {
+
   try {
     const response = await authAPI.login(email, password, rememberMe);
 
     if (response.resultCode === 0) {
       dispatch(getAuthUserData());
     }
+    const message = response.messages.length > 0 ? response.messages[0] : 'Some error';
+    setError('email', { type: 'manual', message });
   } catch (error) {
     console.error('Ошибка при получении авторизационных данных:', error);
   }
