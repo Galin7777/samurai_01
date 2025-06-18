@@ -15,7 +15,6 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         ...action.data,
-        isAuth: true,
       };
 
     default:
@@ -24,7 +23,7 @@ export const authReducer = (state = initialState, action) => {
   };
 };
 
-export const setAuthUserData = (userId, email, login) => ({ type: SET_USER_DATA, data: { userId, email, login } });
+export const setAuthUserData = (userId, email, login, isAuth) => ({ type: SET_USER_DATA, data: { userId, email, login, isAuth } });
 
 export const getAuthUserData = () => async (dispatch) => {
   try {
@@ -32,7 +31,35 @@ export const getAuthUserData = () => async (dispatch) => {
 
     if (response.resultCode === 0) {
       const { id, email, login } = response.data;
-      dispatch(setAuthUserData(id, email, login));
+      dispatch(setAuthUserData(id, email, login, true));
+    }
+  } catch (error) {
+    console.error('Ошибка при получении авторизационных данных:', error);
+  }
+};
+
+export const login = (email, password, rememberMe, setError) => async (dispatch) => {
+
+  try {
+    const response = await authAPI.login(email, password, rememberMe);
+
+    if (response.resultCode === 0) {
+      dispatch(getAuthUserData());
+    }
+    const message = response.messages.length > 0 ? response.messages[0] : 'Some error';
+    setError('email', { type: 'manual', message });
+  } catch (error) {
+    console.error('Ошибка при получении авторизационных данных:', error);
+  }
+};
+
+
+export const logout = () => async (dispatch) => {
+  try {
+    const response = await authAPI.logout();
+
+    if (response.resultCode === 0) {
+      dispatch(setAuthUserData(null, null, null, false));
     }
   } catch (error) {
     console.error('Ошибка при получении авторизационных данных:', error);
