@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Header } from './Header';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAuthUserData } from '../../redux/auth-reduser';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { logout } from '../../redux/auth-reduser';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,10 +15,6 @@ export const HeaderContainer = () => {
   const handleLogout = () => {
     dispatch(logout());
   };
-
-  useEffect(() => {
-    dispatch(getAuthUserData());
-  }, [dispatch]);
 
   useEffect(() => {
     if (!userId && !isAuth) {

@@ -3,12 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Profile } from './Profile';
 import { getUserProfile } from '../../redux/profile-reducer';
-import { withAuthRedirect } from '../../../src/hoc/withAuthRedirect';
 import { Preloader } from '../common/Preloader/Preloader';
 import { getStatus } from '../../redux/profile-reducer';
 import { updateStatus } from '../../redux/profile-reducer';
 
-const ProfileContainer = () => {
+export const ProfileContainer = () => {
   const dispatch = useDispatch();
   const { userId } = useParams();
   const profile = useSelector((state) => state.profilePage.profile);
@@ -27,5 +26,3 @@ const ProfileContainer = () => {
   }
   return < Profile profile={profile} status={status} updateStatus={(status) => dispatch(updateStatus(status))}/>;
 };
-
-export default withAuthRedirect(ProfileContainer);

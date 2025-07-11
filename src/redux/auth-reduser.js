@@ -53,7 +53,6 @@ export const login = (email, password, rememberMe, setError) => async (dispatch)
   }
 };
 
-
 export const logout = () => async (dispatch) => {
   try {
     const response = await authAPI.logout();
