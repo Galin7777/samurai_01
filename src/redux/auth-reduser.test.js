@@ -1,6 +1,5 @@
 import { authReducer } from './auth-reduser';
 import { setAuthUserData } from './auth-reduser';
-import { getAuthUserData } from './auth-reduser';
 
 const userId = 123;
 const email = 'cnwjkcnq@com.ru';
