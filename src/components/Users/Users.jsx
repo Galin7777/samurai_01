@@ -5,43 +5,26 @@ import userPhoto from '../../../src/assets/images/avatar.jpg';
 import { NavLink } from 'react-router-dom';
 import { follow } from '../../redux/users-reduser';
 import { unfollow } from '../../redux/users-reduser';
+import { Pagination } from '../common/Pagination/Pagination';
 
 export const Users = ({ users, currentPage, pages, onPageChanged, portionSize }) => {
   const dispatch = useDispatch();
   const isFollowingInProgress = useSelector((state) => state.usersPage.isFollowingInProgress);
-  const portionNumber = Math.ceil(currentPage / portionSize);
-  const startIndex = (portionNumber - 1) * portionSize;
-  const paginatedPages = pages.slice(startIndex, startIndex + portionSize);
 
-  const handleFollow = (userId) => {
-    dispatch(follow(userId));
-  };
+  const handleFollow = (userId) => dispatch(follow(userId));
 
-  const handleUnfollow = (userId) => {
-    dispatch(unfollow(userId));
-  };
+  const handleUnfollow = (userId) => dispatch(unfollow(userId));
 
   return (
     <div className={classes.usersContainer}>
       {/* Пагинация */}
       <div>
-        {startIndex > 0 && (
-          <button onClick={() => onPageChanged(startIndex)}>{'<'}</button>
-        )}
-
-        {paginatedPages.map((p) => (
-          <span
-            key={p}
-            className={currentPage === p ? classes.selectedPage : ''}
-            onClick={() => onPageChanged(p)}
-          >
-            {p}
-          </span>
-        ))}
-
-        {startIndex + portionSize < pages.length && (
-          <button onClick={() => onPageChanged(startIndex + portionSize + 1)}>{'>'}</button>
-        )}
+        <Pagination
+          currentPage={currentPage}
+          pages={pages}
+          onPageChanged={onPageChanged}
+          portionSize={portionSize}
+        />
       </div>
 
       {/* Список пользователей */}
