@@ -1,37 +1,40 @@
 import classes from './Navbar.module.scss';
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 export const Navbar = (props) => {
+
+  const getLinkClass = ({ isActive }) =>
+    isActive ? `${classes.item} ${classes.activeLink}` : classes.item;
+
   return (
     <nav className={classes.nav}>
       <div className={classes.item}>
-        <NavLink to="/profile" className={({ isActive }) => isActive ? `${classes.item} ${classes.activeLink}` : classes.item}>
+        <NavLink to="/profile" className={getLinkClass}>
           Profile
         </NavLink>
       </div>
       <div className={classes.item}>
-        <NavLink to="/dialogs" className={({ isActive }) => isActive ? `${classes.item} ${classes.activeLink}` : classes.item}>
+        <NavLink to="/dialogs" className={getLinkClass}>
           Messages
         </NavLink>
       </div>
       <div className={classes.item}>
-        <NavLink to="/news" className={({ isActive }) => isActive ? `${classes.item} ${classes.activeLink}` : classes.item}>
+        <NavLink to="/news" className={getLinkClass}>
           News
         </NavLink>
       </div>
       <div className={classes.item}>
-        <NavLink to="/music" className={({ isActive }) => isActive ? `${classes.item} ${classes.activeLink}` : classes.item}>
+        <NavLink to="/music" className={getLinkClass}>
           Music
         </NavLink>
       </div>
       <div className={classes.item}>
-        <NavLink to="/settings" className={({ isActive }) => isActive ? `${classes.item} ${classes.activeLink}` : classes.item}>
+        <NavLink to="/settings" className={getLinkClass}>
           Settings
         </NavLink>
       </div>
       <div className={classes.item}>
-        <NavLink to="/users" className={({ isActive }) => isActive ? `${classes.item} ${classes.activeLink}` : classes.item}>
+        <NavLink to="/users" className={getLinkClass}>
           Users
         </NavLink>
       </div>
