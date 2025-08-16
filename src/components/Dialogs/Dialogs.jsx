@@ -6,7 +6,7 @@ import { TextareaForm } from '../common/TextareaForm/TextareaForm';
 export const Dialogs = (props) => {
   const dialogsElements = props.dialogs
     .map((dialog) => <DialogItem key={dialog.id} {...dialog} />);
-  const messegesElements = props.messages
+  const messagesElements = props.messages
     .map((message) => <Message {...message} />);
 
   return (
@@ -15,7 +15,7 @@ export const Dialogs = (props) => {
         { dialogsElements }
       </div>
       <div className={classes.messages}>
-        { messegesElements }
+        { messagesElements }
       </div>
       <TextareaForm
         name='message'

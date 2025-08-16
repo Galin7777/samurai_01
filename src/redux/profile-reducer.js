@@ -4,6 +4,7 @@ const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const TOGGLE_PROFILE_LOADING = 'TOGGLE_PROFILE_LOADING';
 const SET_STATUS = 'SET_STATUS';
+const POST_DELETE = 'POST_DELETE';
 
 
 const initialState = {
@@ -47,6 +48,11 @@ export const profileReducer = (state = initialState, action) => {
         ...state,
         isLoading: action.isLoading,
       };
+    case POST_DELETE:
+      return {
+        ...state,
+        posts: state.posts.filter((post) => post.id !== action.postId),
+      };
 
     default:
       return state;
@@ -57,6 +63,7 @@ export const addPostActionCreator = (newPostText) => ({ type: ADD_POST, newPostT
 export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile });
 export const toggleProfileLoading = (isLoading) => ({ type: TOGGLE_PROFILE_LOADING, isLoading });
 export const setStatus = (status) => ({ type: SET_STATUS, status });
+export const deletePost = (postId) => ({ type: POST_DELETE, postId });
 
 export const getUserProfile = (userId) => async (dispatch) => {
   dispatch(toggleProfileLoading(true));
@@ -73,7 +80,6 @@ export const getUserProfile = (userId) => async (dispatch) => {
 export const getStatus = (userId) => async (dispatch) => {
   try {
     const response = await profileAPI.getStatus(userId);
-    console.log('GET status:', response);
     dispatch(setStatus(response));
   } catch (error) {
     console.error('Ошибка при загрузке профиля:', error);

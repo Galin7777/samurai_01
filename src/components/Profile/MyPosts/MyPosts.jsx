@@ -1,9 +1,16 @@
 import  classes from './MyPosts.module.scss';
 import { Post } from './Post/Post';
 import { TextareaForm } from '../../common/TextareaForm/TextareaForm';
+import React, { useMemo } from 'react';
 
-export const MyPosts = (props) => {
-  const postsElements = props.posts.map((post) => <Post key={post.id} message={post.message} likesCount={post.likesCount} />);
+export const MyPosts = React.memo((props) => {
+  const postsElements = useMemo(() => {
+    return props.posts.map((post) => (
+      <Post key={post.id} message={post.message} likesCount={post.likesCount} />
+    ));
+  }, [props.posts]);
+
+  console.log('RENDER');
 
   const onAddPost = (newPostText) => {
     props.addPost(newPostText);
@@ -23,4 +30,4 @@ export const MyPosts = (props) => {
       </div>
     </div>
   );
-};
+});
