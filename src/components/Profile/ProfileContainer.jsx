@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { Profile } from './Profile';
 import { getUserProfile } from '../../redux/profile-reducer';
@@ -14,6 +16,11 @@ export const ProfileContainer = () => {
   const isLoading = useSelector((state) => state.profilePage.isLoading);
   const status = useSelector((state) => state.profilePage.status);
 
+  const handleUpdateStatus = useCallback(
+    (status) => dispatch(updateStatus(status)),
+    [dispatch],
+  );
+
   useEffect(() => {
     if (userId) {
       dispatch(getUserProfile(userId));
@@ -24,5 +31,6 @@ export const ProfileContainer = () => {
   if (isLoading || !profile) {
     return <Preloader />;
   }
-  return < Profile profile={profile} status={status} updateStatus={(status) => dispatch(updateStatus(status))}/>;
+
+  return < Profile profile={profile} status={status} updateStatus={handleUpdateStatus}/>;
 };
