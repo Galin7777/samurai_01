@@ -17,10 +17,10 @@ export const HeaderContainer = () => {
   };
 
   useEffect(() => {
-    if (!userId && !isAuth) {
+    if (!isAuth) {
       navigate('/login');
     }
-  }, [userId, navigate]);
+  }, [userId, isAuth, navigate]);
 
   return <Header isAuth={isAuth} login={login} logout={handleLogout} />;
 };
