@@ -7,13 +7,13 @@ export const DialogsContainer = () => {
   const dispatch = useDispatch();
   const { dialogs, messages, newMessageBody } = useSelector((state) => state.dialogsPage);
 
-  const addMessage = (messages) => {
-    dispatch(sendMessageCreator(messages));
+  const addMessage = (messagesText) => {
+    dispatch(sendMessageCreator(messagesText));
   };
 
   return (<Dialogs addMessage={addMessage}
     dialogs={dialogs}
-    messages={messages}
+    messagesText={messages}
     newMessageBody={newMessageBody}
   />
   );
