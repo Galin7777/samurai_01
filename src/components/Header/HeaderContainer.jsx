@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import { logout } from '../../redux/auth-reduser';
 import { useNavigate } from 'react-router-dom';
 
-
 export const HeaderContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
