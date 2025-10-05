@@ -14,11 +14,10 @@ export const LoginForm = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    setError,
   } = useForm({ mode: 'onBlur' });
 
   const onSubmit = (data) => {
-    dispatch(login(data.email, data.password, data.rememberMe, setError));
+    dispatch(login(data));
   };
 
   if (isAuth) {
