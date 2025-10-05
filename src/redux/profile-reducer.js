@@ -1,11 +1,6 @@
+import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { profileAPI } from '../api/api';
-
-const ADD_POST = 'ADD-POST';
-const SET_USER_PROFILE = 'SET_USER_PROFILE';
-const TOGGLE_PROFILE_LOADING = 'TOGGLE_PROFILE_LOADING';
-const SET_STATUS = 'SET_STATUS';
-const POST_DELETE = 'POST_DELETE';
-
 
 const initialState = {
   posts: [
@@ -15,85 +10,87 @@ const initialState = {
   profile: null,
   isLoading: false,
   status: '',
+  error: null,
 };
 
-export const profileReducer = (state = initialState, action) => {
-
-  switch (action.type) {
-    case ADD_POST:
-      const newPost = {
-        id: state.posts.length + 1,
-        message: action.newPostText,
-        likesCount: 0,
-      };
-      return {
-        ...state,
-        posts: [...state.posts, newPost],
-      };
-
-    case SET_STATUS:
-      return {
-        ...state,
-        status: action.status,
-      };
-
-    case SET_USER_PROFILE:
-      return {
-        ...state,
-        profile: action.profile,
-      };
-
-    case TOGGLE_PROFILE_LOADING:
-      return {
-        ...state,
-        isLoading: action.isLoading,
-      };
-    case POST_DELETE:
-      return {
-        ...state,
-        posts: state.posts.filter((post) => post.id !== action.postId),
-      };
-
-    default:
-      return state;
-  }
-};
-
-export const addPostActionCreator = (newPostText) => ({ type: ADD_POST, newPostText });
-export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile });
-export const toggleProfileLoading = (isLoading) => ({ type: TOGGLE_PROFILE_LOADING, isLoading });
-export const setStatus = (status) => ({ type: SET_STATUS, status });
-export const deletePost = (postId) => ({ type: POST_DELETE, postId });
-
-export const getUserProfile = (userId) => async (dispatch) => {
-  dispatch(toggleProfileLoading(true));
-  try {
-    const response = await profileAPI.getProfile(userId);
-    dispatch(setUserProfile(response));
-  } catch (error) {
-    console.error('Ошибка при загрузке профиля:', error);
-  } finally {
-    dispatch(toggleProfileLoading(false));
-  }
-};
-
-export const getStatus = (userId) => async (dispatch) => {
-  try {
-    const response = await profileAPI.getStatus(userId);
-    dispatch(setStatus(response));
-  } catch (error) {
-    console.error('Ошибка при загрузке профиля:', error);
-  }
-};
-
-export const updateStatus = (status) => async (dispatch) => {
-  try {
-    const response = await profileAPI.updateStatus(status);
-    console.log('PUT status response:', response);
-    if (response.resultCode === 0) {
-      dispatch(setStatus(status));
+export const getUserProfile = createAsyncThunk(
+  'profile/getUserProfile',
+  async (userId, { rejectWithValue }) => {
+    try {
+      const response = await profileAPI.getProfile(userId);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.message || 'Ошибка при загрузке профиля');
     }
-  } catch (error) {
-    console.error('Ошибка при загрузке профиля:', error);
-  }
-};
+  },
+);
+
+export const getStatus = createAsyncThunk(
+  'profile/getStatus',
+  async (userId, { rejectWithValue }) => {
+    try {
+      const response = await profileAPI.getStatus(userId);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.message || 'Ошибка при загрузке профиля');
+    }
+  },
+);
+
+export const updateStatus = createAsyncThunk(
+  'profile/updateStatus',
+  async (status, { rejectWithValue }) => {
+    try {
+      const response = await profileAPI.updateStatus(status);
+      if (response.resultCode === 0) {
+        return status;
+      } else {
+        return rejectWithValue('Не удалось обновить статус');
+      }
+    } catch (error) {
+      return rejectWithValue(error.message || 'Ошибка при загрузке профиля');
+    }
+  },
+);
+
+export const profileSlice = createSlice({
+  name: 'profile',
+  initialState,
+  reducers: {
+    addPostActionCreator: (state, action) => {
+      state.posts.push({
+        id: state.posts.length + 1,
+        message: action.payload,
+      });
+    },
+    deletePost: (state, action) => {
+      state.posts = state.posts.filter((post) => post.id !== action.payload);
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getUserProfile.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getUserProfile.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.profile = action.payload;
+      })
+      .addCase(getUserProfile.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(getStatus.fulfilled, (state, action) => {
+        state.status = action.payload;
+      })
+      .addCase(getStatus.rejected, (state, action) => {
+        state.error = action.payload;
+      })
+      .addCase(updateStatus.fulfilled, (state, action) => {
+        state.status = action.payload;
+      });
+  },
+});
+
+export const { addPostActionCreator, deletePost } = profileSlice.actions;
