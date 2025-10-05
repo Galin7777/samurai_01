@@ -22,7 +22,7 @@ export const UsersContainer = () => {
   const isFetching = useSelector(selectIsFetching);
 
   useEffect(() => {
-    dispatch(getUsers(currentPage, pageSize)); // вынесла в редьюсер
+    dispatch(getUsers({ pageNumber: currentPage, pageSize })); // вынесла в редьюсер
   }, [dispatch, currentPage, pageSize]); // вынесла
 
   const onPageChanged = (pageNumber) => {
