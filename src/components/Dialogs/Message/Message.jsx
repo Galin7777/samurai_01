@@ -1,5 +1,4 @@
 import classes from './../Dialogs.module.scss';
-import React from 'react';
 
 export const Message = (props) => {
   const isLeft = props.id % 2 === 0; // Чётные id — слева, нечётные — справа

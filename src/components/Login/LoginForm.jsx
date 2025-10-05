@@ -13,12 +13,11 @@ export const LoginForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    setError,
+    formState: { errors, isSubmitting },
   } = useForm({ mode: 'onBlur' });
 
   const onSubmit = (data) => {
-    dispatch(login(data.email, data.password, data.rememberMe, setError));
+    dispatch(login(data));
   };
 
   if (isAuth) {
@@ -54,12 +53,11 @@ export const LoginForm = () => {
         <input
           id='rememberMe'
           type='checkbox'
-          name='rememberMe'
           {...register('rememberMe')}
         />
         <label htmlFor='rememberMe'>Запомни меня</label>
       </div>
-      <button type="submit" className={classes.button}>
+      <button type="submit" disabled={isSubmitting} className={classes.button} >
         Войти
       </button>
     </form>

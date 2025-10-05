@@ -1,4 +1,4 @@
-import { authReducer } from './auth-reduser';
+import { authSlice } from './auth-reduser';
 import { setAuthUserData } from './auth-reduser';
 
 const userId = 123;
@@ -13,11 +13,11 @@ const state = {
   isAuth: false,
 };
 
-it('should set user data correctly in authReducer', () => {
+it('should set user data correctly in authSlice', () => {
   //1. test data
   const action = setAuthUserData(userId, email, login, isAuth);
   //2.action
-  const newState = authReducer(state, action);
+  const newState = authSlice(state, action);
   //3.expectation
   expect(newState.userId).toBe(123);
   expect(newState.email).toBe('cnwjkcnq@com.ru');

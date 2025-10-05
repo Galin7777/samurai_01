@@ -1,23 +1,21 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { configureStore } from '@reduxjs/toolkit';
-import { profileReducer } from './profile-reducer';
-import { dialogsReducer } from './dialogs-reducer';
+import { profileSlice } from './profile-reducer';
+import { dialogsSlice } from './dialogs-reducer';
 import { sidebarReducer } from './sidebar-reducer';
-import { usersReducer } from './users-reduser';
-import { authReducer } from './auth-reduser';
-import { thunk } from 'redux-thunk';
-import { appReducer } from './app-reduser';
+import { usersSlice } from './users-reduser';
+import { authSlice } from './auth-reduser';
+import { appSlice } from './app-reduser';
 
 export const reducer = combineReducers({
-  profilePage: profileReducer,
-  dialogsPage: dialogsReducer,
+  profilePage: profileSlice.reducer,
+  dialogsPage: dialogsSlice.reducer,
   sidebar: sidebarReducer,
-  usersPage: usersReducer,
-  auth: authReducer,
-  app: appReducer,
+  usersPage: usersSlice.reducer,
+  auth: authSlice.reducer,
+  app: appSlice.reducer,
 });
 
 export const store = configureStore({
   reducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 });

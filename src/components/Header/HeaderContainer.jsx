@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import { logout } from '../../redux/auth-reduser';
 import { useNavigate } from 'react-router-dom';
 
-
 export const HeaderContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -17,10 +16,10 @@ export const HeaderContainer = () => {
   };
 
   useEffect(() => {
-    if (!userId && !isAuth) {
+    if (!isAuth) {
       navigate('/login');
     }
-  }, [userId, navigate]);
+  }, [userId, isAuth, navigate]);
 
   return <Header isAuth={isAuth} login={login} logout={handleLogout} />;
 };

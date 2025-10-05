@@ -11,6 +11,8 @@ import { selectPageSize } from '../../redux/users-selectors';
 import { selectTotalUsersCount } from '../../redux/users-selectors';
 import { selectIsFetching } from '../../redux/users-selectors';
 
+const PORTION_SIZE = 10;
+
 export const UsersContainer = () => {
   const dispatch = useDispatch();
   const users = useSelector(selectUsers);
@@ -20,7 +22,7 @@ export const UsersContainer = () => {
   const isFetching = useSelector(selectIsFetching);
 
   useEffect(() => {
-    dispatch(getUsers(currentPage, pageSize)); // вынесла в редьюсер
+    dispatch(getUsers({ pageNumber: currentPage, pageSize })); // вынесла в редьюсер
   }, [dispatch, currentPage, pageSize]); // вынесла
 
   const onPageChanged = (pageNumber) => {
@@ -38,7 +40,7 @@ export const UsersContainer = () => {
           currentPage={currentPage}
           pages={pages}
           onPageChanged={onPageChanged}
-          portionSize={10}
+          portionSize={PORTION_SIZE}
         />
       )}
     </>

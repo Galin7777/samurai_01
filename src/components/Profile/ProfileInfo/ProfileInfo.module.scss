@@ -1,3 +1,77 @@
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; // расстояние между блоками
+  padding: 20px;
+  background-color: #fff; // или #1e1e1e для тёмной темы
+  border-radius: 10px;
+}
+
+/* Блок с аватаром */
+.avatarBlock {
+  display: flex;
+  flex-direction: column; /* чтобы картинка и текст были друг под другом */
+  align-items: center; /* центрируем по горизонтали */
+  text-align: center; /* чтобы текст был по центру */
+
+  img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    margin-bottom: 8px; /* отступ от картинки до слова */
+  }
+}
+
+/* Блок с основной информацией */
 .descriptionBlock {
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .fullName {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .aboutMe {
+    font-style: italic;
+    color: #666;
+  }
+
+  .jobStatus {
+    font-weight: 500;
+    color: #333;
+  }
+
+  .skills {
+    background: #f8f8f8;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Блок с контактами */
+.contactsBlock {
+  margin-top: 10px;
+
+  h3 {
+    margin-bottom: 8px;
+    font-size: 1.2rem;
+  }
+
+  .contactItem {
+    margin-bottom: 4px;
+
+    a {
+      color: #0077cc;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }

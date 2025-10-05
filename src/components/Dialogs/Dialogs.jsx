@@ -6,7 +6,7 @@ import { TextareaForm } from '../common/TextareaForm/TextareaForm';
 export const Dialogs = (props) => {
   const dialogsElements = props.dialogs
     .map((dialog) => <DialogItem key={dialog.id} {...dialog} />);
-  const messagesElements = props.messages
+  const messagesElements = props.messagesText
     .map((message) => <Message {...message} />);
 
   return (

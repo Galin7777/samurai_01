@@ -10,8 +10,6 @@ export const MyPosts = React.memo((props) => {
     ));
   }, [props.posts]);
 
-  console.log('RENDER');
-
   const onAddPost = (newPostText) => {
     props.addPost(newPostText);
   };

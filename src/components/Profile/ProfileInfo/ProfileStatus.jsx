@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import classes from './ProfileInfo.module.scss';
 
 export const ProfileStatus = ({ status: initialStatus, updateStatus }) => {
   const [editMode, setEditMode] = useState(false);
@@ -23,11 +22,18 @@ export const ProfileStatus = ({ status: initialStatus, updateStatus }) => {
     setStatus(e.target.value);
   };
 
+  const onKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      deactivateEditMode();
+    }
+  };
+
   return (
     <div>
       {!editMode ? (
         <div>
-          <span onDoubleClick={activateEditMode}>
+          <span onDoubleClick={activateEditMode}
+            style={{ color: status ? 'inherit' : '#888' }}>
             {status || 'No status'}
           </span>
         </div>
@@ -37,6 +43,7 @@ export const ProfileStatus = ({ status: initialStatus, updateStatus }) => {
             autoFocus
             onBlur={deactivateEditMode}
             onChange={onStatusChange}
+            onKeyDown={onKeyDown}
             value={status}
           />
         </div>
