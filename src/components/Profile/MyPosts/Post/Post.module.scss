@@ -1,5 +1,8 @@
 .item {
-  color: red;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: chartreuse;
 
   img {
     width: 40px;
