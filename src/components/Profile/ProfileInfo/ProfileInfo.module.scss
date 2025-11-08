@@ -1,43 +1,86 @@
 .profileInfo {
   display: flex;
   flex-direction: column;
-  gap: 20px; // расстояние между блоками
-  padding: 20px;
-  background-color: #fff; // или #1e1e1e для тёмной темы
-  border-radius: 10px;
+  gap: 20px;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  max-width: 800px;
+  margin: 20px auto;
 }
 
-/* Блок с аватаром */
+/* Аватар */
 .avatarBlock {
+  position: relative;
   display: flex;
-  flex-direction: column; /* чтобы картинка и текст были друг под другом */
-  align-items: center; /* центрируем по горизонтали */
-  text-align: center; /* чтобы текст был по центру */
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f0f0f0;
 
   img {
-    width: 150px;
-    height: 150px;
+    width: 160px;
+    height: 160px;
     object-fit: cover;
     border-radius: 50%;
-    border: 2px solid #ccc;
-    margin-bottom: 8px; /* отступ от картинки до слова */
+    border: 3px solid #ddd;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Кнопка-карандаш (справа вверху аватара) */
+  .editPhotoButton {
+    position: absolute;
+    top: 5px;
+    right: calc(50% - 80px); /* чтобы быть справа от круга */
+    transform: translateX(100%);
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease, background 0.3s ease;
+
+    svg {
+      width: 18px;
+      height: 18px;
+      fill: #fff;
+    }
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+  }
+
+  &:hover .editPhotoButton {
+    opacity: 1;
   }
 }
 
-/* Блок с основной информацией */
+/* скрываем input file */
+.hiddenFileInput {
+  display: none;
+}
+
+/* Остальное оформление */
 .descriptionBlock {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-
-  .fullName {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
+  gap: 10px;
 
   .aboutMe {
     font-style: italic;
-    color: #666;
+    color: #555;
   }
 
   .jobStatus {
@@ -46,24 +89,30 @@
   }
 
   .skills {
-    background: #f8f8f8;
-    padding: 8px;
+    background: #f9f9f9;
+    border-left: 4px solid #0077cc;
+    padding: 10px 12px;
     border-radius: 6px;
     font-size: 0.95rem;
   }
 }
 
-/* Блок с контактами */
 .contactsBlock {
-  margin-top: 10px;
+  margin-top: 15px;
+  background: #fafafa;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #eee;
 
   h3 {
     margin-bottom: 8px;
     font-size: 1.2rem;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 4px;
   }
 
   .contactItem {
-    margin-bottom: 4px;
+    margin-bottom: 6px;
 
     a {
       color: #0077cc;
