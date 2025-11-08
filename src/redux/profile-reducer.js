@@ -10,6 +10,7 @@ const initialState = {
   profile: null,
   isLoading: false,
   status: '',
+  file: [],
   error: null,
 };
 
@@ -53,6 +54,22 @@ export const updateStatus = createAsyncThunk(
   },
 );
 
+export const savePhoto = createAsyncThunk(
+  'profile/savePhoto',
+  async (file, { rejectWithValue }) => {
+    try {
+      const response = await profileAPI.savePhoto(file);
+      if (response.resultCode === 0) {
+        return response.data.photos;
+      } else {
+        return rejectWithValue('Не удалось обновить фото');
+      }
+    } catch (error) {
+      return rejectWithValue(error.message || 'Ошибка при загрузке фото');
+    }
+  },
+);
+
 export const profileSlice = createSlice({
   name: 'profile',
   initialState,
@@ -89,6 +106,11 @@ export const profileSlice = createSlice({
       })
       .addCase(updateStatus.fulfilled, (state, action) => {
         state.status = action.payload;
+      })
+      .addCase(savePhoto.fulfilled, (state, action) => {
+        if (state.profile) {
+          state.profile.photos = action.payload;
+        }
       });
   },
 });
