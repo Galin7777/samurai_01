@@ -66,21 +66,20 @@ export const ProfileInfo = ({ profile, status, updateStatus, isOwner, savePhoto 
 
       {/* Контакты */}
       <div className={classes.contactsBlock}>
-        <h3>Contacts:</h3>
-        {Object.values(profile.contacts).some(Boolean) ? (
-          Object.entries(profile.contacts).map(([key, value]) =>
-            value ? (
-              <p key={key} className={classes.contactItem}>
-                <strong>{key}:</strong>{' '}
-                <a href={value} target="_blank" rel="noreferrer">
-                  {value}
-                </a>
-              </p>
-            ) : null,
-          )
-        ) : (
-          <p>No contacts available.</p>
-        )}
+        <h3>Contacts</h3>
+
+        {Object.entries(profile.contacts).map(([key, value]) => (
+          <p key={key} className={classes.contactItem}>
+            <strong>{key}:</strong>{' '}
+            {value ? (
+              <a href={value} target="_blank" rel="noreferrer">
+                {value}
+              </a>
+            ) : (
+              <span> - </span>
+            )}
+          </p>
+        ))}
       </div>
     </div>
   );
