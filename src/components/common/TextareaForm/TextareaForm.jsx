@@ -2,19 +2,30 @@ import { useForm } from 'react-hook-form';
 import { useWatch } from 'react-hook-form';
 import { requiredForm } from '../../../utils/validationRules';
 
-export const TextareaForm = ({ name, placeholder, onSubmitForm, buttontext }) => {
+export const TextareaForm = ({
+  name,
+  placeholder,
+  onSubmitForm,
+  buttontext,
+  defaultValue = '',
+  showButton = true,
+}) => {
   const {
     register,
     handleSubmit,
     control,
     reset,
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      [name]: defaultValue,
+    },
+  });
 
   const value = useWatch({ control, name });
 
   const onSubmit = (data) => {
     onSubmitForm(data[name]);
-    reset();
+    reset({ [name]: '' });
   };
 
   return (
@@ -22,7 +33,7 @@ export const TextareaForm = ({ name, placeholder, onSubmitForm, buttontext }) =>
       <div>
         <textarea {...register(name, requiredForm)} placeholder={placeholder} />
       </div>
-      {value && (
+      {showButton && value && (
         <button type="submit">{buttontext}</button>
       )}
     </form>
