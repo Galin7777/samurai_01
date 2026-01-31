@@ -18,14 +18,9 @@ export const ProfileStatus = ({ status: initialStatus, updateStatus }) => {
     }
   };
 
-  const onStatusChange = (e) => {
-    setStatus(e.target.value);
-  };
-
-  const onKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      deactivateEditMode();
-    }
+  const cancelEditMode = () => {
+    setEditMode(false);
+    setStatus(initialStatus); // возвращаем старый статус
   };
 
   return (
@@ -41,11 +36,23 @@ export const ProfileStatus = ({ status: initialStatus, updateStatus }) => {
         <div>
           <input
             autoFocus
-            onBlur={deactivateEditMode}
-            onChange={onStatusChange}
-            onKeyDown={onKeyDown}
             value={status}
+            onChange={(e) => setStatus(e.target.value)}
           />
+          <button
+            type="button"
+            onClick={deactivateEditMode}
+            style={{ marginLeft: '8px' }}
+          >
+            ✔
+          </button>
+          <button
+            type="button"
+            onClick={cancelEditMode}
+            style={{ marginLeft: '8px' }}
+          >
+            ✖
+          </button>
         </div>
       )}
     </div>
