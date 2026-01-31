@@ -26,6 +26,22 @@ export const getUserProfile = createAsyncThunk(
   },
 );
 
+export const updateUserProfile = createAsyncThunk(
+  'profile/updateUserProfile',
+  async (profile, { rejectWithValue }) => {
+    try {
+      const response = await profileAPI.updateUserProfile(profile);
+      if (response.resultCode === 0) {
+        return profile;
+      } else {
+        return rejectWithValue('Не удалось обновить профиль');
+      }
+    } catch (error) {
+      return rejectWithValue(error.message || 'Ошибка при загрузке профиля');
+    }
+  },
+);
+
 export const getStatus = createAsyncThunk(
   'profile/getStatus',
   async (userId, { rejectWithValue }) => {
@@ -97,6 +113,9 @@ export const profileSlice = createSlice({
       .addCase(getUserProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      })
+      .addCase(updateUserProfile.fulfilled, (state, action) => {
+        state.profile = action.payload;
       })
       .addCase(getStatus.fulfilled, (state, action) => {
         state.status = action.payload;
